@@ -1,6 +1,3 @@
-# Mongo-Cheat-sheet
-Mongo Db cheat sheeet 
-
 # MongoDB Cheat Sheet
 
 ## Show All Databases
