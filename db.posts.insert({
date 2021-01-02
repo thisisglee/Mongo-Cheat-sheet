@@ -1,0 +1,97 @@
+db.posts.insert({
+	title: 'Post One',
+	body: 'Body of Post one',
+	category: 'News',
+	likes: 4,
+	tags: ['nes','events'],
+	user: {
+		name: 'John Doe',
+		status: 'author'
+	},
+	date: Date()
+})
+
+db.posts.insertMany([
+	{
+		title: 'Post Two',
+		body: 'Body of Post two',
+		category: 'Technoloy',
+		date: Date()
+	},
+	{
+		title: 'Post Three',
+		body: 'Body of Post three',
+		category: 'News',
+		date: Date()
+	},
+	{
+		title: 'Post Four',
+		body: 'Body of Post three',
+		category: 'Entertainment',
+		date: Date()
+	}
+])
+
+/////////////////////// UPDate
+db.posts.update({ title: 'Post Two' },
+	{
+		title: 'Post Two',
+		body: 'New post 2 body',
+		date: Date()
+	},
+	{
+		upsert: true
+	}	
+)
+
+//////////////////////// Set
+db.posts.update({ title: 'Post Two' },
+	{
+		$set: {
+			body: 'Body of Post two',
+			category: 'Technology'
+		}
+	}
+)
+
+////////////////////////// Sub documents
+db.posts.update({ title: 'Post One' },
+	{
+		$set: {
+			comments: [
+				{
+					user: 'Mary Williams',
+					body: 'Comment One',
+					date: Date()
+				},
+				{
+					user: 'Harry White',
+					body: 'Comment Two',
+					date: Date()
+				},
+			]
+		}
+	}
+)
+
+////////////////////// finding elements ion array
+db.posts.find({
+	comments: {
+		$elemMatch: {
+		user: 'Marry Williams'
+		}
+	}
+})
+
+/////////////////////// Text search
+db.posts.find({
+	$text: {
+		$search: "\"Post O\""
+	}
+})
+
+//////////////////////// greter than less than
+db.posts.update({ title: 'Post Two'},
+	{$set: {views: 10}})
+
+db.posts.find({ views: {$gt: 3}})
